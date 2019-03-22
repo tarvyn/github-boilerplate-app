@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Item } from '../models';
+import { Item, User } from '../models';
 
-const mocks: Array<Item> = [
+const mockItems: Array<Item> = [
   {
     id: '0',
     someDate: new Date()
@@ -13,12 +13,20 @@ const mocks: Array<Item> = [
   },
 ];
 
+const mockUser: User = {
+  id: 1
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
   getItems(): Observable<Array<Item>> {
-    return of(mocks);
+    return of(mockItems);
+  }
+
+  login(userName: string, password: string): Observable<User> {
+    return of(mockUser);
   }
 }
