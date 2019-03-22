@@ -1,7 +1,7 @@
-import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
+import {createFeatureSelector, createSelector, MemoizedSelector} from '@ngrx/store';
 
-import { Item } from '../../models';
-import { featureAdapter, State } from './state';
+import {Item} from '../../models';
+import {featureAdapter, State} from './state';
 
 export const getError = (state: State): any => state.error;
 

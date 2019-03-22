@@ -1,8 +1,8 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {Observable} from 'rxjs';
 
-import { EntityFeatureStoreEffects } from './effects';
+import {EntityFeatureStoreEffects} from './effects';
 
 describe('EffectEffects', () => {
   let actions$: Observable<any>;

@@ -1,22 +1,21 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
-
-import { Effects } from './effects';
+import {TestBed} from '@angular/core/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {Observable} from 'rxjs';
+import {StandardFeatureStoreEffects} from './effects';
 
 describe('Effects', () => {
   let actions$: Observable<any>;
-  let effects: Effects;
+  let effects: StandardFeatureStoreEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        Effects,
+        StandardFeatureStoreEffects,
         provideMockActions(() => actions$)
       ]
     });
 
-    effects = TestBed.get(Effects);
+    effects = TestBed.get(StandardFeatureStoreEffects);
   });
 
   it('should be created', () => {

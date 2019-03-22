@@ -1,22 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { DataService } from '../../services/data.service';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Action} from '@ngrx/store';
+import {Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {DataService} from '../../services/data.service';
 import * as featureActions from './actions';
 
 @Injectable()
-export class EntityFeatureStoreEffects {
-  constructor(private dataService: DataService, private actions$: Actions) {}
-
+class EntityFeatureStoreEffects {
   @Effect()
   loadRequestEffect$: Observable<Action> = this.actions$.pipe(
     ofType<featureActions.LoadRequestAction>(
       featureActions.ActionTypes.LOAD_REQUEST
     ),
     startWith(new featureActions.LoadRequestAction()),
-    switchMap(action =>
+    switchMap(() =>
       this.dataService
         .getItems()
         .pipe(
@@ -27,9 +25,14 @@ export class EntityFeatureStoreEffects {
               })
           ),
           catchError(error =>
-            observableOf(new featureActions.LoadFailureAction({ error }))
+            observableOf(new featureActions.LoadFailureAction({error}))
           )
         )
     )
   );
+
+  constructor(private dataService: DataService, private actions$: Actions) {
+  }
 }
+
+export {EntityFeatureStoreEffects};
