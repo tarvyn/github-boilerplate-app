@@ -1,7 +1,8 @@
-import {TestBed} from '@angular/core/testing';
-import {provideMockActions} from '@ngrx/effects/testing';
-import {Observable} from 'rxjs';
-import {StandardFeatureStoreEffects} from './effects';
+/* tslint:disable:no-any prefer-const */
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
+import { StandardFeatureStoreEffects } from './effects';
 
 describe('Effects', () => {
   let actions$: Observable<any>;
@@ -19,6 +20,7 @@ describe('Effects', () => {
   });
 
   it('should be created', () => {
-    expect(effects).toBeTruthy();
+    expect(effects)
+      .toBeTruthy();
   });
 });

@@ -5,12 +5,13 @@ export const featureAdapter: EntityAdapter<Item> =
   createEntityAdapter<Item>({
     selectId: model => model.id,
     sortComparer: (a: Item, b: Item): number =>
-      b.someDate.toString().localeCompare(a.someDate.toString())
+      b.someDate.toString()
+        .localeCompare(a.someDate.toString())
   });
 
 export interface State extends EntityState<Item> {
   isLoading?: boolean;
-  error?: any;
+  error?: string;
 }
 
 export const initialState: State = featureAdapter.getInitialState(

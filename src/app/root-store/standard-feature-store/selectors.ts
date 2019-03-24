@@ -7,16 +7,16 @@ import {
 import { User } from '../../models';
 import { State } from './state';
 
-const getError = (state: State): any => state.error;
+const getError = (state: State): string => state.error;
 
 const getIsLoading = (state: State): boolean => state.isLoading;
 
-const getUser = (state: State): any => state.user;
+const getUser = (state: State): User => state.user;
 
 export const selectStandardFeatureState: MemoizedSelector<object, State> =
   createFeatureSelector<State>('standardFeature');
 
-export const selectStandardFeatureError: MemoizedSelector<object, any> = createSelector(
+export const selectStandardFeatureError: MemoizedSelector<object, string> = createSelector(
   selectStandardFeatureState,
   getError
 );

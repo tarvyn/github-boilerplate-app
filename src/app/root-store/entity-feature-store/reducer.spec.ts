@@ -1,5 +1,6 @@
-import {featureReducer} from './reducer';
-import {initialState} from './state';
+/* tslint:disable:no-any */
+import { featureReducer } from './reducer';
+import { initialState } from './state';
 
 describe('EntityFeature Reducer', () => {
   describe('an unknown action', () => {
@@ -8,7 +9,8 @@ describe('EntityFeature Reducer', () => {
 
       const result = featureReducer(initialState, action);
 
-      expect(result).toBe(initialState);
+      expect(result)
+        .toBe(initialState);
     });
   });
 });

@@ -1,8 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import {provideMockActions} from '@ngrx/effects/testing';
-import {Observable} from 'rxjs';
+/* tslint:disable:no-any prefer-const */
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
 
-import {EntityFeatureStoreEffects} from './effects';
+import { EntityFeatureStoreEffects } from './effects';
 
 describe('EffectEffects', () => {
   let actions$: Observable<any>;
@@ -20,6 +21,7 @@ describe('EffectEffects', () => {
   });
 
   it('should be created', () => {
-    expect(effects).toBeTruthy();
+    expect(effects)
+      .toBeTruthy();
   });
 });

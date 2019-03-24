@@ -1,9 +1,9 @@
-import {createFeatureSelector, createSelector, MemoizedSelector} from '@ngrx/store';
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
-import {Item} from '../../models';
-import {featureAdapter, State} from './state';
+import { Item } from '../../models';
+import { featureAdapter, State } from './state';
 
-export const getError = (state: State): any => state.error;
+export const getError = (state: State): string => state.error;
 
 export const getIsLoading = (state: State): boolean => state.isLoading;
 
@@ -12,10 +12,10 @@ export const selectEntityFeatureState: MemoizedSelector<object,
 
 export const selectAllEntityFeatureItems: (
   state: object
-) => Item[] = featureAdapter.getSelectors(selectEntityFeatureState).selectAll;
+) => Array<Item> = featureAdapter.getSelectors(selectEntityFeatureState).selectAll;
 
 export const selectEntityFeatureById = (id: string) =>
-  createSelector(this.selectAllEntityFeatureItems, (allEntityFeatureItems: Item[]) => {
+  createSelector(selectAllEntityFeatureItems, (allEntityFeatureItems: Array<Item>) => {
     if (allEntityFeatureItems) {
       return allEntityFeatureItems.find(p => p.id === id);
     } else {
@@ -23,7 +23,7 @@ export const selectEntityFeatureById = (id: string) =>
     }
   });
 
-export const selectEntityFeatureError: MemoizedSelector<object, any> = createSelector(
+export const selectEntityFeatureError: MemoizedSelector<object, string> = createSelector(
   selectEntityFeatureState,
   getError
 );

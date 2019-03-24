@@ -20,7 +20,7 @@ export class LoadFailureAction implements Action {
 export class LoadSuccessAction implements Action {
   readonly type = ActionTypes.LOAD_SUCCESS;
 
-  constructor(public payload: { items: Item[] }) {}
+  constructor(public payload: { items: Array<Item> }) {}
 }
 
 export type Actions = LoadRequestAction | LoadFailureAction | LoadSuccessAction;
