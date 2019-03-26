@@ -1,27 +1,20 @@
 # ReduxBoilerplateApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+Angular + ngrx boilerplate app for ESolutions team.
 
-## Development server
+## Build and run flow
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+In order to perform production build
+or run application locally, follow steps below:
 
-## Code scaffolding
+1. Install `nodejs` (https://nodejs.org/en/) in case it's not installed.
+Choose the "Recommended for all users" version.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. Run `npm install` command under the project directory
+in order to install project dependencies.
 
-## Build
+3.1. Run `npm run start` to run app locally.
+Navigate to `http://localhost:4200/`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+3.2. Run `npm run build:prod` to build production 
+artifacts that will be stored in the `dist/` directory.
