@@ -3,15 +3,13 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { EntityFeatureStoreModule } from './entity-feature-store';
-import { StandardFeatureStoreModule } from './standard-feature-store';
+import { UsersStoreModule } from './users-store';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    EntityFeatureStoreModule,
-    StandardFeatureStoreModule,
+    UsersStoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([])
   ]

@@ -2,6 +2,15 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@store/*": ["src/app/store/*"],
+      "@store": ["src/app/store/index"],
+      "@models/*": ["src/app/models/*"],
+      "@models": ["src/app/models/index"],
+      "@api-connectors/*": ["src/app/api-connectors/*"],
+      "@api-connectors": ["src/app/api-connectors/index"],
+      "@testing/*": ["src/app/testing/*"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

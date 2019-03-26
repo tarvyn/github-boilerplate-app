@@ -2,22 +2,21 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
-
-import { EntityFeatureStoreEffects } from './effects';
+import { UsersStoreEffects } from './effects';
 
 describe('EffectEffects', () => {
   let actions$: Observable<any>;
-  let effects: EntityFeatureStoreEffects;
+  let effects: UsersStoreEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        EntityFeatureStoreEffects,
+        UsersStoreEffects,
         provideMockActions(() => actions$)
       ]
     });
 
-    effects = TestBed.get(EntityFeatureStoreEffects);
+    effects = TestBed.get(UsersStoreEffects);
   });
 
   it('should be created', () => {
