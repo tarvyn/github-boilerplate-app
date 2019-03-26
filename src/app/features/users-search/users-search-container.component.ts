@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GithubUser } from '@models';
 import { select, Store } from '@ngrx/store';
 import * as fromUsers from '@store/users-store';
 
@@ -11,4 +12,8 @@ export class UsersSearchContainerComponent {
   users$ = this.store.pipe(select(fromUsers.selectAllUsers));
 
   constructor(private store: Store<fromUsers.State>) {}
+
+  trackUsersBy(index: number, user: GithubUser): number {
+    return user.id;
+  }
 }
