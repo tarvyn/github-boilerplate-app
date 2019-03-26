@@ -90,7 +90,7 @@
     "no-empty": true,
     "no-empty-interface": true,
     "no-eval": true,
-    "no-implicit-dependencies": [true, "dev"],
+    "no-implicit-dependencies": [true, "dev", ["@store", "@models", "@api-connectors", "@testing"]],
     "no-inferrable-types": [
       true,
       "ignore-params"
