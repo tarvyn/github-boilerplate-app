@@ -10,10 +10,16 @@ import * as fromUsers from '@store/users-store';
 })
 export class UsersSearchContainerComponent {
   users$ = this.store.pipe(select(fromUsers.selectAllUsers));
+  search$ = this.store.pipe(select(fromUsers.selectUsersSearch));
+  isLoading$ = this.store.pipe(select(fromUsers.selectUsersIsLoading));
 
   constructor(private store: Store<fromUsers.State>) {}
 
-  trackUsersBy(index: number, user: GithubUser): number {
-    return user.id;
+  onSearch(search: string): void {
+    this.store.dispatch(new fromUsers.SetSearchAction({ search }));
+  }
+
+  onSearchApply(): void {
+    this.store.dispatch(new fromUsers.SearchUsersStartAction());
   }
 }

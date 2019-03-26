@@ -1,6 +1,16 @@
-<span>Users search:</span>
-<input type="text">
+<app-search-bar
+  [value]="search$ | async"
+  [isLoading]="isLoading$ | async"
+  (search)="onSearch($event)"
+  (searchApply)="onSearchApply()">
+</app-search-bar>
 
-<div class="search-results" *ngIf="users$ | async; let users">
-  <div *ngFor="let user of users; trackBy: trackUsersBy">{{user.id}}</div>
-</div>
+<app-users-list
+  *ngIf="users$ | async; let users"
+  [users]="users">
+</app-users-list>
+
+<span *ngIf="!(isLoading$ | async) && !(users$ | async).length">
+  No users were found
+</span>
+

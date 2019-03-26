@@ -4,11 +4,11 @@ import { featureAdapter, initialState, State } from './state';
 export function featureReducer(state = initialState, action: Actions): State {
   switch (action.type) {
     case ActionTypes.SEARCH_USERS_START: {
-      return {
+      return featureAdapter.removeAll({
         ...state,
         isLoading: true,
         error: null
-      };
+      });
     }
     case ActionTypes.SEARCH_USERS_SUCCESS: {
       return featureAdapter.addAll(action.payload.users, {
