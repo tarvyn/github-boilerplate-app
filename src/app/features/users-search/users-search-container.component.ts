@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { GithubUser } from '@models';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromUsers from '@store/users-store';
+import { UsersSearchSelectorsService } from './users-search-selectors.service';
 
 @Component({
   selector: 'app-users-search-container',
@@ -9,11 +9,10 @@ import * as fromUsers from '@store/users-store';
   styleUrls: ['./users-search-container.component.scss']
 })
 export class UsersSearchContainerComponent {
-  users$ = this.store.pipe(select(fromUsers.selectAllUsers));
-  search$ = this.store.pipe(select(fromUsers.selectUsersSearch));
-  isLoading$ = this.store.pipe(select(fromUsers.selectUsersIsLoading));
-
-  constructor(private store: Store<fromUsers.State>) {}
+  constructor(
+    private store: Store<fromUsers.State>,
+    private selectors: UsersSearchSelectorsService
+  ) {}
 
   onSearch(search: string): void {
     this.store.dispatch(new fromUsers.SetSearchAction({ search }));

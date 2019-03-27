@@ -24,8 +24,7 @@
       "element",
       "kebab-case",
       [
-        "cmp-prefix1",
-        "cmp-prefix2"
+        "ngb"
       ],
       true
     ],
@@ -41,8 +40,7 @@
       "attribute",
       "camelCase",
       [
-        "dir-prefix1",
-        "dir-prefix2"
+        "ngb"
       ],
       true
     ],
