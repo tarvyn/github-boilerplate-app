@@ -1,2 +1,1 @@
-export * from './custom-model';
-export * from './user';
+export * from './github-user';

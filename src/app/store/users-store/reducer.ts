@@ -1,23 +1,23 @@
 import { Actions, ActionTypes } from './actions';
 import { featureAdapter, initialState, State } from './state';
 
-export function featureReducer(state = initialState, action: Actions): State {
+function featureReducer(state = initialState, action: Actions): State {
   switch (action.type) {
-    case ActionTypes.LOAD_REQUEST: {
+    case ActionTypes.SEARCH_USERS_START: {
       return {
         ...state,
         isLoading: true,
         error: null
       };
     }
-    case ActionTypes.LOAD_SUCCESS: {
-      return featureAdapter.addAll(action.payload.items, {
+    case ActionTypes.SEARCH_USERS_SUCCESS: {
+      return featureAdapter.addAll(action.payload.users, {
         ...state,
         isLoading: false,
         error: null
       });
     }
-    case ActionTypes.LOAD_FAILURE: {
+    case ActionTypes.SEARCH_USERS_ERROR: {
       return {
         ...state,
         isLoading: false,
@@ -29,3 +29,5 @@ export function featureReducer(state = initialState, action: Actions): State {
     }
   }
 }
+
+export { featureReducer };
