@@ -1,3 +1,4 @@
+/* tslint:disable:no-any no-unbound-method */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -26,9 +27,9 @@ describe('UsersSearchContainerComponent', () => {
       providers: [{
         provide: UsersSearchSelectorsService,
         useValue: {
-          users$: new Subject(),
-          search$: new Subject(),
-          isLoading$: new Subject()
+          users$: new Subject<any>(),
+          search$: new Subject<any>(),
+          isLoading$: new Subject<any>()
         }
       }]
     })

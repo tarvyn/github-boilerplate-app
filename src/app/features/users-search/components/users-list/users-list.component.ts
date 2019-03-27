@@ -7,10 +7,12 @@ import { GithubUser } from '@models';
   styleUrls: ['./users-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent {
+class UsersListComponent {
   @Input() users: Array<GithubUser>;
 
   trackUsersBy(index: number, user: GithubUser): number {
     return user.id;
   }
 }
+
+export { UsersListComponent };

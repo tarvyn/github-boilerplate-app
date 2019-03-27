@@ -6,9 +6,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchBarComponent {
+class SearchBarComponent {
   @Input() value: string;
   @Input() isLoading: boolean;
   @Output() search = new EventEmitter<string>();
   @Output() searchApply = new EventEmitter<void>();
 }
+
+export { SearchBarComponent };

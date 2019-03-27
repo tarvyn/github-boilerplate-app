@@ -5,10 +5,12 @@ import { StoreModule } from '@ngrx/store';
 import { UsersStoreEffects } from './effects';
 import { featureReducer } from './reducer';
 
+const usersFeature = 'users';
+
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature('users', featureReducer),
+    StoreModule.forFeature(usersFeature, featureReducer),
     EffectsModule.forFeature([UsersStoreEffects])
   ],
   providers: [UsersStoreEffects]

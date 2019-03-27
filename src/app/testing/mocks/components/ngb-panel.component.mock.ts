@@ -1,3 +1,4 @@
+/* tslint:disable:component-selector */
 import { Component } from '@angular/core';
 
 @Component({

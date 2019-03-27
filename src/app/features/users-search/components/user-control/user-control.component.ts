@@ -6,8 +6,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   styleUrls: ['./user-control.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserControlComponent {
+class UserControlComponent {
   @Input() label: string;
   @Input() value: string | number;
   @Input() href: string;
 }
+
+export { UserControlComponent };

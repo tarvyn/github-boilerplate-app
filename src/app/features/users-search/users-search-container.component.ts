@@ -8,7 +8,7 @@ import { UsersSearchSelectorsService } from './users-search-selectors.service';
   templateUrl: './users-search-container.component.html',
   styleUrls: ['./users-search-container.component.scss']
 })
-export class UsersSearchContainerComponent {
+class UsersSearchContainerComponent {
   constructor(
     private store: Store<fromUsers.State>,
     private selectors: UsersSearchSelectorsService
@@ -22,3 +22,5 @@ export class UsersSearchContainerComponent {
     this.store.dispatch(new fromUsers.SearchUsersStartAction());
   }
 }
+
+export { UsersSearchContainerComponent };

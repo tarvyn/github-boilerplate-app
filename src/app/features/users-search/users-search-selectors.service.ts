@@ -5,10 +5,12 @@ import * as fromUsers from '@store/users-store';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersSearchSelectorsService {
+class UsersSearchSelectorsService {
   users$ = this.store.pipe(select(fromUsers.selectAllUsers));
   search$ = this.store.pipe(select(fromUsers.selectUsersSearch));
   isLoading$ = this.store.pipe(select(fromUsers.selectUsersIsLoading));
 
   constructor(private store: Store<fromUsers.State>) {}
 }
+
+export { UsersSearchSelectorsService };
