@@ -1,22 +1,21 @@
 import { GithubUser } from '@models';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
-
 import { featureAdapter, State } from './state';
 
-export const getError = (state: State): string => state.error;
+const getError = (state: State): string => state.error;
 
-export const getIsLoading = (state: State): boolean => state.isLoading;
+const getIsLoading = (state: State): boolean => state.isLoading;
 
-export const selectUsersState: MemoizedSelector<object, State> =
+const selectUsersState: MemoizedSelector<object, State> =
   createFeatureSelector<State>('users');
 
-export const selectAllUsers: (state: State) => Array<GithubUser> =
+const selectAllUsers: (state: State) => Array<GithubUser> =
   createSelector(
     selectUsersState,
     featureAdapter.getSelectors().selectAll
   );
 
-export const selectUserById = (id: GithubUser['id']) =>
+const selectUserById = (id: GithubUser['id']) =>
   createSelector(selectAllUsers, (users: Array<GithubUser>) => {
     if (users) {
       return users.find(user => user.id === id);
@@ -24,12 +23,22 @@ export const selectUserById = (id: GithubUser['id']) =>
     return null;
   });
 
-export const selectUsersSearchError: MemoizedSelector<object, string> = createSelector(
+const selectUsersSearchError: MemoizedSelector<State, string> = createSelector(
   selectUsersState,
   getError
 );
 
-export const selectUsersIsLoading: MemoizedSelector<object, boolean> = createSelector(
+const selectUsersIsLoading: MemoizedSelector<State, boolean> = createSelector(
   selectUsersState,
   getIsLoading
 );
+
+export {
+  getError,
+  getIsLoading,
+  selectUsersState,
+  selectAllUsers,
+  selectUserById,
+  selectUsersSearchError,
+  selectUsersIsLoading
+};

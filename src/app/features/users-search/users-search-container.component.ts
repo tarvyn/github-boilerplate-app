@@ -8,7 +8,7 @@ import * as fromUsers from '@store/users-store';
   templateUrl: './users-search-container.component.html',
   styleUrls: ['./users-search-container.component.scss']
 })
-export class UsersSearchContainerComponent {
+class UsersSearchContainerComponent {
   users$ = this.store.pipe(select(fromUsers.selectAllUsers));
 
   constructor(private store: Store<fromUsers.State>) {}
@@ -17,3 +17,5 @@ export class UsersSearchContainerComponent {
     return user.id;
   }
 }
+
+export { UsersSearchContainerComponent };

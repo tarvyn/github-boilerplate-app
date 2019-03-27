@@ -1,7 +1,7 @@
 import { Actions, ActionTypes } from './actions';
 import { featureAdapter, initialState, State } from './state';
 
-export function featureReducer(state = initialState, action: Actions): State {
+function featureReducer(state = initialState, action: Actions): State {
   switch (action.type) {
     case ActionTypes.SEARCH_USERS_START: {
       return {
@@ -29,3 +29,5 @@ export function featureReducer(state = initialState, action: Actions): State {
     }
   }
 }
+
+export { featureReducer };

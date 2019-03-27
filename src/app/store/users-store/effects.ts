@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GithubApiConnectorService } from '@api-connectors';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -7,7 +8,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import * as usersActions from './actions';
 
 @Injectable()
-export class UsersStoreEffects {
+class UsersStoreEffects {
   @Effect()
   loadRequestEffect$: Observable<Action> = this.actions$.pipe(
     ofType<usersActions.SearchUsersStartAction>(
@@ -19,8 +20,8 @@ export class UsersStoreEffects {
         .searchUsers(action.payload.search)
         .pipe(
           map(users => new usersActions.SearchUsersSuccessAction({ users })),
-          catchError(error =>
-            observableOf(new usersActions.SearchUsersErrorAction({ error }))
+          catchError((error: HttpErrorResponse) =>
+            observableOf(new usersActions.SearchUsersErrorAction({ error: error.message }))
           )
         )
     )
@@ -31,3 +32,5 @@ export class UsersStoreEffects {
     private actions$: Actions
   ) { }
 }
+
+export { UsersStoreEffects };

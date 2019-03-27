@@ -9,14 +9,16 @@ const mockUsers: Array<GithubUser> = [
   {
     id: 1
   }
-];
+] as any;
 
 // TODO: replace mocks with api call
 @Injectable({
   providedIn: 'root'
 })
-export class GithubApiConnectorService {
+class GithubApiConnectorService {
   searchUsers(userName: string): Observable<Array<GithubUser>> {
     return of(mockUsers);
   }
 }
+
+export { GithubApiConnectorService };
