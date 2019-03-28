@@ -7,10 +7,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class SearchBarComponent {
-  @Input() value: string;
-  @Input() isLoading: boolean;
-  @Output() search = new EventEmitter<string>();
-  @Output() searchApply = new EventEmitter<void>();
+  @Input() public value: string;
+  @Input() public isLoading: boolean;
+  @Output() public search = new EventEmitter<string>();
+  @Output() public searchApply = new EventEmitter<void>();
 }
 
 export { SearchBarComponent };

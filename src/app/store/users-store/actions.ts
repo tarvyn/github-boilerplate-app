@@ -9,23 +9,23 @@ enum ActionTypes {
 }
 
 class SetSearchAction implements Action {
-  readonly type = ActionTypes.SET_SEARCH;
+  public readonly type = ActionTypes.SET_SEARCH;
 
   constructor(public payload: { search: string }) {}
 }
 
 class SearchUsersStartAction implements Action {
-  readonly type = ActionTypes.SEARCH_USERS_START;
+  public readonly type = ActionTypes.SEARCH_USERS_START;
 }
 
 class SearchUsersErrorAction implements Action {
-  readonly type = ActionTypes.SEARCH_USERS_ERROR;
+  public readonly type = ActionTypes.SEARCH_USERS_ERROR;
 
   constructor(public payload: { error: string }) {}
 }
 
 class SearchUsersSuccessAction implements Action {
-  readonly type = ActionTypes.SEARCH_USERS_SUCCESS;
+  public readonly type = ActionTypes.SEARCH_USERS_SUCCESS;
 
   constructor(public payload: { users: Array<GithubUser> }) {}
 }

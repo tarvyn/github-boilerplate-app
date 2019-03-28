@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MocksModule } from '@testing/mocks';
 
-import { UsersSearchSelectorsService } from './users-search-selectors.service';
+import { UsersSearchContainerService } from './users-search-selectors.service';
 
 describe('UsersSearchSelectorsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -9,7 +9,7 @@ describe('UsersSearchSelectorsService', () => {
   }));
 
   it('should be created', () => {
-    const service: UsersSearchSelectorsService = TestBed.get(UsersSearchSelectorsService);
+    const service: UsersSearchContainerService = TestBed.get(UsersSearchContainerService);
     expect(service)
       .toBeTruthy();
   });

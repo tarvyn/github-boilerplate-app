@@ -51,7 +51,7 @@ const mockUsers: Array<GithubUser> = [
   providedIn: 'root'
 })
 export class GithubApiConnectorService {
-  searchUsers(userName: string): Observable<Array<GithubUser>> {
+  public searchUsers(userName: string): Observable<Array<GithubUser>> {
     const delayTime = 1000;
 
     return of(mockUsers)

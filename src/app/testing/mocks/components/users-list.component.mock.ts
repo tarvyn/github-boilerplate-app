@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   template: '<div></div>'
 })
 export class MockUsersListComponent {
-  @Input() users: any;
+  @Input() public users: any;
 }

@@ -1,15 +1,15 @@
 <app-search-bar
-  [value]="selectors.search$ | async"
-  [isLoading]="selectors.isLoading$ | async"
+  [value]="search$ | async"
+  [isLoading]="isLoading$ | async"
   (search)="onSearch($event)"
   (searchApply)="onSearchApply()">
 </app-search-bar>
 
 <app-users-list
-  [users]="selectors.users$ | async">
+  [users]="users$ | async">
 </app-users-list>
 
-<span class="not-found-message" *ngIf="!(selectors.isLoading$ | async) && !(selectors.users$ | async)?.length">
+<span class="not-found-message" *ngIf="usersNotFound$ | async">
   No users were found
 </span>
 

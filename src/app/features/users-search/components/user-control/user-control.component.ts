@@ -7,9 +7,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class UserControlComponent {
-  @Input() label: string;
-  @Input() value: string | number;
-  @Input() href: string;
+  @Input() public label: string;
+  @Input() public value: string | number;
+  @Input() public href: string;
 }
 
 export { UserControlComponent };

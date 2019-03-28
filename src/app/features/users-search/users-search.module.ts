@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-import { UsersSearchSelectorsService } from './users-search-selectors.service';
+import { UsersSearchContainerService } from './users-search-selectors.service';
 import { UserControlComponent } from './components/user-control/user-control.component';
 import { UsersSearchContainerComponent } from './users-search-container.component';
 import { UsersSearchRoutingModule } from './users-search-routing.module';
@@ -21,7 +21,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
     NgbAccordionModule
   ],
   providers: [
-    UsersSearchSelectorsService
+    UsersSearchContainerService
   ]
 })
 export class UsersSearchModule {}

@@ -6,8 +6,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   template: '<div></div>'
 })
 export class MockSearchBarComponent {
-  @Input() value: any;
-  @Input() isLoading: any;
-  @Output() search = new EventEmitter<any>();
-  @Output() searchApply = new EventEmitter<any>();
+  @Input() public value: any;
+  @Input() public isLoading: any;
+  @Output() public search = new EventEmitter<any>();
+  @Output() public searchApply = new EventEmitter<any>();
 }

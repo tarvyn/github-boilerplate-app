@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromUsers from '@store/users-store';
-import { UsersSearchSelectorsService } from './users-search-selectors.service';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UsersSearchContainerService } from './users-search-selectors.service';
 
 @Component({
   selector: 'app-users-search-container',
@@ -9,17 +11,28 @@ import { UsersSearchSelectorsService } from './users-search-selectors.service';
   styleUrls: ['./users-search-container.component.scss']
 })
 class UsersSearchContainerComponent {
+  public users$ = this.usersSearchContainerService.users$;
+  public search$ = this.usersSearchContainerService.search$;
+  public isLoading$ = this.usersSearchContainerService.isLoading$;
+  public usersNotFound$ = combineLatest(
+    this.users$,
+    this.isLoading$
+  )
+    .pipe(
+      map(([users, isLoading]) => !isLoading && !(users && users.length)),
+    );
+
   constructor(
     private store: Store<fromUsers.State>,
-    private selectors: UsersSearchSelectorsService
+    private usersSearchContainerService: UsersSearchContainerService
   ) {}
 
-  onSearch(search: string): void {
-    this.store.dispatch(new fromUsers.SetSearchAction({ search }));
+  public onSearch(search: string): void {
+    this.usersSearchContainerService.dispatchSetSearchAction(search);
   }
 
-  onSearchApply(): void {
-    this.store.dispatch(new fromUsers.SearchUsersStartAction());
+  public onSearchApply(): void {
+    this.usersSearchContainerService.dispatchSearchApplyAction();
   }
 }
 

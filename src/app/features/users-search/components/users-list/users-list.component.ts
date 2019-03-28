@@ -8,9 +8,9 @@ import { GithubUser } from '@models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class UsersListComponent {
-  @Input() users: Array<GithubUser>;
+  @Input() public users: Array<GithubUser>;
 
-  trackUsersBy(index: number, user: GithubUser): number {
+  public trackUsersBy(index: number, user: GithubUser): number {
     return user.id;
   }
 }

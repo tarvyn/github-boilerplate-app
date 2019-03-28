@@ -1,15 +1,14 @@
-/* tslint:disable:no-any no-unbound-method */
+/* tslint:disable:no-any no-unbound-method no-empty */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { MockStore } from '@ngrx/store/testing';
 import { State } from '@store/state';
-import * as fromUsers from '@store/users-store';
 import { MocksModule } from '@testing/mocks';
 import { MockSearchBarComponent, MockUsersListComponent } from '@testing/mocks/components';
 import { Subject } from 'rxjs';
 import { UsersSearchContainerComponent } from './users-search-container.component';
-import { UsersSearchSelectorsService } from './users-search-selectors.service';
+import { UsersSearchContainerService } from './users-search-selectors.service';
 
 describe('UsersSearchContainerComponent', () => {
   const selectors = {
@@ -18,18 +17,20 @@ describe('UsersSearchContainerComponent', () => {
   let component: UsersSearchContainerComponent;
   let fixture: ComponentFixture<UsersSearchContainerComponent>;
   let mockStore: MockStore<State>;
-  let selectorsService;
+  let containerService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UsersSearchContainerComponent],
       imports: [MocksModule],
       providers: [{
-        provide: UsersSearchSelectorsService,
+        provide: UsersSearchContainerService,
         useValue: {
           users$: new Subject<any>(),
           search$: new Subject<any>(),
-          isLoading$: new Subject<any>()
+          isLoading$: new Subject<any>(),
+          dispatchSetSearchAction() {},
+          dispatchSearchApplyAction() {}
         }
       }]
     })
@@ -38,106 +39,124 @@ describe('UsersSearchContainerComponent', () => {
 
   beforeEach(() => {
     mockStore = TestBed.get(Store);
-    selectorsService = TestBed.get(UsersSearchSelectorsService);
+    containerService = TestBed.get(UsersSearchContainerService);
     fixture = TestBed.createComponent(UsersSearchContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component)
-      .toBeTruthy();
+  describe('component API', () => {
+    describe('onSearch method', () => {
+      it('should correctly dispatch action', () => {
+        spyOn(containerService, 'dispatchSetSearchAction');
+
+        component.onSearch('fakeSearch');
+
+        expect(containerService.dispatchSetSearchAction)
+          .toHaveBeenCalledWith('fakeSearch');
+      });
+    });
+    describe('onSearchApply method', () => {
+      it('should correctly dispatch search apply action', () => {
+        spyOn(containerService, 'dispatchSearchApplyAction');
+
+        component.onSearchApply();
+
+        expect(containerService.dispatchSearchApplyAction)
+          .toHaveBeenCalled();
+      });
+    });
   });
 
-  it('should correctly pass parameters to search bar component', () => {
-    selectorsService.search$.next('fakeSearch');
-    selectorsService.isLoading$.next('fakeIsLoading');
-    fixture.detectChanges();
+  describe('component View', () => {
 
-    const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
+    it('should create', () => {
+      expect(component)
+        .toBeTruthy();
+    });
 
-    expect(searchBarComponent.value)
-      .toBe('fakeSearch');
-    expect(searchBarComponent.isLoading)
-      .toBe('fakeIsLoading');
-  });
+    describe('search-bar component', () => {
+      it('should correctly pass input parameters', () => {
+        containerService.search$.next('fakeSearch');
+        containerService.isLoading$.next('fakeIsLoading');
+        fixture.detectChanges();
 
-  it('should correctly pass parameters to user list component', () => {
-    const fakeUsers = [{ fake: true }];
+        const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
 
-    selectorsService.users$.next(fakeUsers);
-    fixture.detectChanges();
+        expect(searchBarComponent.value)
+          .toBe('fakeSearch');
+        expect(searchBarComponent.isLoading)
+          .toBe('fakeIsLoading');
+      });
 
-    const usersListComponent = fixture.debugElement.query(By.directive(MockUsersListComponent)).componentInstance;
+      it('should correctly call onSearch method on search event', () => {
+        const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
 
-    expect(usersListComponent.users)
-      .toBe(fakeUsers);
-  });
+        spyOn(component, 'onSearch');
+        searchBarComponent.search.emit('fakeSearch');
 
-  it(`should show "no users found" message in case no users were found
-      and users are not fetching`,
-    () => {
+        expect(component.onSearch)
+          .toHaveBeenCalledWith('fakeSearch');
+      });
+
+      it('should correctly call onSearchApply method on searchApply event', () => {
+        const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
+
+        spyOn(component, 'onSearchApply');
+        searchBarComponent.searchApply.emit();
+
+        expect(component.onSearchApply)
+          .toHaveBeenCalled();
+      });
+    });
+
+    describe('users-list component', () => {
+      it('should correctly pass input parameters', () => {
+        const fakeUsers = [{ fake: true }];
+
+        containerService.users$.next(fakeUsers);
+        fixture.detectChanges();
+
+        const usersListComponent = fixture.debugElement.query(By.directive(MockUsersListComponent)).componentInstance;
+
+        expect(usersListComponent.users)
+          .toBe(fakeUsers);
+      });
+    });
+
+    describe('not-found message', () => {
       const getNotFoundMessage = () => {
         const element = fixture.debugElement.query(By.css(selectors.notFoundMessage));
 
         return element && element.nativeElement.textContent.trim();
       };
 
-      selectorsService.isLoading$.next(false);
-      selectorsService.users$.next([]);
-      fixture.detectChanges();
+      it('should be shown in case there are no users found and users are not being fetched', () => {
+        containerService.isLoading$.next(false);
+        containerService.users$.next([]);
+        fixture.detectChanges();
 
-      expect(getNotFoundMessage())
-        .toBe('No users were found');
+        expect(getNotFoundMessage())
+          .toBe('No users were found');
+      });
 
-      selectorsService.isLoading$.next(false);
-      selectorsService.users$.next([1]);
-      fixture.detectChanges();
+      it('should not be shown in case at least one user was found', () => {
+        containerService.isLoading$.next(false);
+        containerService.users$.next(['fake']);
+        fixture.detectChanges();
 
-      expect(!!getNotFoundMessage())
-        .toBeFalsy('message should not be shown in case at least one user was found');
+        expect(getNotFoundMessage())
+          .toBeNull();
+      });
 
-      selectorsService.isLoading$.next(true);
-      selectorsService.users$.next([]);
-      fixture.detectChanges();
+      it('should not be shown in case users are being fetched', () => {
+        containerService.isLoading$.next(true);
+        containerService.users$.next([]);
+        fixture.detectChanges();
 
-      expect(!!getNotFoundMessage())
-        .toBeFalsy('message should not be shown in case users are fetching');
+        expect(getNotFoundMessage())
+          .toBeNull();
+      });
     });
-
-  it('should call onSearch method on search event', () => {
-    const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
-
-    spyOn(component, 'onSearch');
-    searchBarComponent.search.emit('fakeSearch');
-
-    expect(component.onSearch)
-      .toHaveBeenCalledWith('fakeSearch');
-  });
-
-  it('should call onSearchApply method on searchApply event', () => {
-    const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
-
-    spyOn(component, 'onSearchApply');
-    searchBarComponent.searchApply.emit();
-
-    expect(component.onSearchApply)
-      .toHaveBeenCalled();
-  });
-
-  it('should correctly dispatch action on search method call', () => {
-    spyOn(mockStore, 'dispatch');
-    component.onSearch('fakeSearch');
-
-    expect(mockStore.dispatch)
-      .toHaveBeenCalledWith(new fromUsers.SetSearchAction({ search: 'fakeSearch' }));
-  });
-
-  it('should correctly dispatch search apply action', () => {
-    spyOn(mockStore, 'dispatch');
-    component.onSearchApply();
-
-    expect(mockStore.dispatch)
-      .toHaveBeenCalledWith(new fromUsers.SearchUsersStartAction());
   });
 });

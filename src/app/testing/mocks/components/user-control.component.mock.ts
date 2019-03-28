@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   template: '<div></div>'
 })
 export class MockUserControlComponent {
-  @Input() label: any;
-  @Input() value: any;
-  @Input() href: any;
+  @Input() public label: any;
+  @Input() public value: any;
+  @Input() public href: any;
 }
