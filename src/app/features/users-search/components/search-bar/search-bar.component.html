@@ -1,0 +1,20 @@
+<div class="input-group mb-3 align-items-center">
+  <input type="text"
+    class="form-control"
+    placeholder="Users search"
+    aria-label="Users search"
+    [value]="value"
+    (keyup)="search.emit($event.target.value)"
+    (keydown.enter)="searchApply.emit()">
+  <div class="spinner spinner-border" role="status"
+    *ngIf="isLoading">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary"
+      type="button"
+      (click)="searchApply.emit()">
+      Search
+    </button>
+  </div>
+</div>

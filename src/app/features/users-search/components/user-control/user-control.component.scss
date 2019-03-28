@@ -1,0 +1,10 @@
+.form-group {
+  flex-wrap: nowrap;
+}
+
+.control {
+  flex-shrink: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

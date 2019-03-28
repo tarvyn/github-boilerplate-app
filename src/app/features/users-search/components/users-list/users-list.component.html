@@ -1,0 +1,44 @@
+<ngb-accordion #acc="ngbAccordion">
+  <ngb-panel
+    *ngFor="let user of users; trackBy: trackUsersBy"
+    [title]="user.login">
+    <ng-template ngbPanelContent>
+      <div class="row user-info-row">
+        <app-user-control
+          class="col-md-6"
+          label="id"
+          [value]="user.id">
+        </app-user-control>
+        <app-user-control
+          class="col-md-6"
+          label="node id"
+          [value]="user.node_id">
+        </app-user-control>
+      </div>
+      <div class="row user-info-row">
+        <app-user-control
+          class="col-md-6"
+          label="gravatar id"
+          [value]="user.gravatar_id">
+        </app-user-control>
+        <app-user-control
+          class="col-md-6"
+          label="url"
+          [href]="user.url">
+        </app-user-control>
+      </div>
+      <div class="row user-info-row">
+        <app-user-control
+          class="col-md-6"
+          label="html url"
+          [href]="user.html_url">
+        </app-user-control>
+        <app-user-control
+          class="col-md-6"
+          label="followers url"
+          [href]="user.followers_url">
+        </app-user-control>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

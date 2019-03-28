@@ -1,6 +1,7 @@
 /* tslint:disable:no-any prefer-const */
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { MocksModule } from '@testing/mocks';
 import { Observable } from 'rxjs';
 import { UsersStoreEffects } from './effects';
 
@@ -10,6 +11,9 @@ describe('EffectEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MocksModule
+      ],
       providers: [
         UsersStoreEffects,
         provideMockActions(() => actions$)

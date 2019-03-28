@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { GithubUser } from '@models';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromUsers from '@store/users-store';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UsersSearchContainerService } from './users-search-selectors.service';
 
 @Component({
   selector: 'app-users-search-container',
@@ -9,12 +11,28 @@ import * as fromUsers from '@store/users-store';
   styleUrls: ['./users-search-container.component.scss']
 })
 class UsersSearchContainerComponent {
-  users$ = this.store.pipe(select(fromUsers.selectAllUsers));
+  public users$ = this.usersSearchContainerService.users$;
+  public search$ = this.usersSearchContainerService.search$;
+  public isLoading$ = this.usersSearchContainerService.isLoading$;
+  public usersNotFound$ = combineLatest(
+    this.users$,
+    this.isLoading$
+  )
+    .pipe(
+      map(([users, isLoading]) => !isLoading && !(users && users.length)),
+    );
 
-  constructor(private store: Store<fromUsers.State>) {}
+  constructor(
+    private store: Store<fromUsers.State>,
+    private usersSearchContainerService: UsersSearchContainerService
+  ) {}
 
-  trackUsersBy(index: number, user: GithubUser): number {
-    return user.id;
+  public onSearch(search: string): void {
+    this.usersSearchContainerService.dispatchSetSearchAction(search);
+  }
+
+  public onSearchApply(): void {
+    this.usersSearchContainerService.dispatchSearchApplyAction();
   }
 }
 

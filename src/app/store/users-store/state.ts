@@ -7,12 +7,14 @@ const featureAdapter: EntityAdapter<GithubUser> =
   });
 
 interface State extends EntityState<GithubUser> {
+  search: string;
   isLoading?: boolean;
   error?: string;
 }
 
 const initialState: State = featureAdapter.getInitialState(
   {
+    search: '',
     isLoading: false,
     error: null
   }

@@ -15,5 +15,4 @@ const usersFeature = 'users';
   ],
   providers: [UsersStoreEffects]
 })
-
 export class UsersStoreModule {}

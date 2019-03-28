@@ -6,6 +6,8 @@ const getError = (state: State): string => state.error;
 
 const getIsLoading = (state: State): boolean => state.isLoading;
 
+const getSearch = (state: State): string => state.search;
+
 const selectUsersState: MemoizedSelector<object, State> =
   createFeatureSelector<State>('users');
 
@@ -33,10 +35,17 @@ const selectUsersIsLoading: MemoizedSelector<State, boolean> = createSelector(
   getIsLoading
 );
 
+const selectUsersSearch: MemoizedSelector<State, string> = createSelector(
+  selectUsersState,
+  getSearch
+);
+
 export {
   getError,
+  getSearch,
   getIsLoading,
   selectUsersState,
+  selectUsersSearch,
   selectAllUsers,
   selectUserById,
   selectUsersSearchError,

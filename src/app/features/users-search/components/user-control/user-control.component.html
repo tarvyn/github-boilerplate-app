@@ -1,0 +1,18 @@
+<div class="form-group row">
+  <label class="col-sm-4 col-form-label"
+    [htmlFor]="label">
+    {{label}}
+  </label>
+  <div class="col-sm-auto control"
+    [class.col-form-label]="href">
+    <input type="text" readonly class="form-control-plaintext"
+      *ngIf="value"
+      [id]="label"
+      [value]="value">
+    <a class="alert-link"
+      *ngIf="href"
+      [href]="href">
+      {{href}}
+    </a>
+  </div>
+</div>
