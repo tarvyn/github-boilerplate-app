@@ -1,11 +1,6 @@
 {
   "name": "redux-boilerplate-app",
   "version": "0.0.0",
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint && npm run test:no-watch"
-    }
-  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
@@ -15,6 +10,11 @@
     "lint": "ng lint",
     "tslint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json",
     "e2e": "ng e2e"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint && npm run test:no-watch"
+    }
   },
   "private": true,
   "dependencies": {
