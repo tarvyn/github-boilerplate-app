@@ -7,6 +7,7 @@
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
+    "test:no-watch": "ng test --watch false",
     "lint": "ng lint",
     "tslint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json",
     "e2e": "ng e2e"
