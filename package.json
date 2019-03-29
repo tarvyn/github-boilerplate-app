@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "tslint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pre-push": "npm run lint && npm run test:no-watch"
   },
   "husky": {
     "hooks": {
