@@ -7,9 +7,15 @@
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
+    "test:no-watch": "ng test --watch false",
     "lint": "ng lint",
     "tslint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json",
     "e2e": "ng e2e"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint && npm run test:no-watch"
+    }
   },
   "private": true,
   "dependencies": {
@@ -43,6 +49,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "husky": "^1.3.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",
