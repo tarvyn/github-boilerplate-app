@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as fromUsers from '@store/users-store';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UsersSearchContainerService } from './users-search-selectors.service';
@@ -23,7 +21,6 @@ class UsersSearchContainerComponent {
     );
 
   constructor(
-    private store: Store<fromUsers.State>,
     private usersSearchContainerService: UsersSearchContainerService
   ) {}
 
