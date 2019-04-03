@@ -6,11 +6,16 @@ import { MockStore } from '@ngrx/store/testing';
 import { State } from '@store/state';
 import { MocksModule } from '@testing/mocks';
 import { MockSearchBarComponent, MockUsersListComponent } from '@testing/mocks/components';
-import { Subject } from 'rxjs';
+import { defer, of } from 'rxjs';
+import { TestScheduler } from 'rxjs/testing';
 import { UsersSearchContainerComponent } from './users-search-container.component';
 import { UsersSearchContainerService } from './users-search-selectors.service';
 
 describe('UsersSearchContainerComponent', () => {
+  const scheduler = new TestScheduler((actual, expected) => {
+    expect(actual)
+      .toEqual(expected);
+  });
   const selectors = {
     notFoundMessage: '.not-found-message'
   };
@@ -18,6 +23,9 @@ describe('UsersSearchContainerComponent', () => {
   let fixture: ComponentFixture<UsersSearchContainerComponent>;
   let mockStore: MockStore<State>;
   let containerService;
+  let users$$;
+  let search$$;
+  let isLoading$$;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,12 +34,12 @@ describe('UsersSearchContainerComponent', () => {
       providers: [{
         provide: UsersSearchContainerService,
         useValue: {
-          users$: new Subject<any>(),
-          search$: new Subject<any>(),
-          isLoading$: new Subject<any>(),
+          users$: defer(() => users$$),
+          search$: defer(() => search$$),
+          isLoading$: defer(() => isLoading$$),
           dispatchSetSearchAction() {},
           dispatchSearchApplyAction() {}
-        }
+        },
       }]
     })
       .compileComponents();
@@ -42,10 +50,27 @@ describe('UsersSearchContainerComponent', () => {
     containerService = TestBed.get(UsersSearchContainerService);
     fixture = TestBed.createComponent(UsersSearchContainerComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   describe('component API', () => {
+    describe('usersNotFound$ property', () => {
+      it('should correctly indicate whether users were not found', () => {
+        scheduler.run(({ hot, expectObservable }) => {
+          users$$ = hot('-a-b-', {
+            a: undefined,
+            b: [1]
+          });
+          isLoading$$ = hot('c-d-c', {
+            c: true,
+            d: false
+          });
+
+          expectObservable(component.usersNotFound$)
+            .toBe('-ftff', { f: false, t: true });
+        });
+      });
+    });
+
     describe('onSearch method', () => {
       it('should correctly dispatch action', () => {
         spyOn(containerService, 'dispatchSetSearchAction');
@@ -56,6 +81,7 @@ describe('UsersSearchContainerComponent', () => {
           .toHaveBeenCalledWith('fakeSearch');
       });
     });
+
     describe('onSearchApply method', () => {
       it('should correctly dispatch search apply action', () => {
         spyOn(containerService, 'dispatchSearchApplyAction');
@@ -77,10 +103,9 @@ describe('UsersSearchContainerComponent', () => {
 
     describe('search-bar component', () => {
       it('should correctly pass input parameters', () => {
-        containerService.search$.next('fakeSearch');
-        containerService.isLoading$.next('fakeIsLoading');
+        search$$ = of('fakeSearch');
+        isLoading$$ = of('fakeIsLoading');
         fixture.detectChanges();
-
         const searchBarComponent = fixture.debugElement.query(By.directive(MockSearchBarComponent)).componentInstance;
 
         expect(searchBarComponent.value)
@@ -114,7 +139,7 @@ describe('UsersSearchContainerComponent', () => {
       it('should correctly pass input parameters', () => {
         const fakeUsers = [{ fake: true }];
 
-        containerService.users$.next(fakeUsers);
+        users$$ = of(fakeUsers);
         fixture.detectChanges();
 
         const usersListComponent = fixture.debugElement.query(By.directive(MockUsersListComponent)).componentInstance;
@@ -132,8 +157,8 @@ describe('UsersSearchContainerComponent', () => {
       };
 
       it('should be shown in case there are no users found and users are not being fetched', () => {
-        containerService.isLoading$.next(false);
-        containerService.users$.next([]);
+        isLoading$$ = of(false);
+        users$$ = of([]);
         fixture.detectChanges();
 
         expect(getNotFoundMessage())
@@ -141,8 +166,8 @@ describe('UsersSearchContainerComponent', () => {
       });
 
       it('should not be shown in case at least one user was found', () => {
-        containerService.isLoading$.next(false);
-        containerService.users$.next(['fake']);
+        isLoading$$ = of(false);
+        users$$ = of(['fake']);
         fixture.detectChanges();
 
         expect(getNotFoundMessage())
@@ -150,8 +175,8 @@ describe('UsersSearchContainerComponent', () => {
       });
 
       it('should not be shown in case users are being fetched', () => {
-        containerService.isLoading$.next(true);
-        containerService.users$.next([]);
+        isLoading$$ = of(true);
+        users$$ = of([]);
         fixture.detectChanges();
 
         expect(getNotFoundMessage())
